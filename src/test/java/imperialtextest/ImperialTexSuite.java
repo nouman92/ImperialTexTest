@@ -158,6 +158,10 @@ public class ImperialTexSuite {
 		if(InStock==true)
 		{
 			//FILL IN THE BILLING INFORMATION
+			//billing:firstname
+			//*[@id="billing:firstname"]
+			WebDriverWait firstName= new WebDriverWait(driver, 100);
+			firstName.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='billing:firstname']")));
 			driver.findElement(By.xpath("//*[@id='billing:firstname']")).sendKeys("test");
 			System.out.println("First Name is Enterd");
 
