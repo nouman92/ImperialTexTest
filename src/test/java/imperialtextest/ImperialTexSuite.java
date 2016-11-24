@@ -27,6 +27,7 @@ import org.testng.annotations.Test;
 public class ImperialTexSuite {
 	WebDriver driver;
 	boolean InStock = true;
+	WebElement checkOut;
 	private boolean existsElement(String id) {
 	    try {
 	        driver.findElement(By.xpath(id));
@@ -95,6 +96,7 @@ public class ImperialTexSuite {
 			System.out.println("Random product is clicked");
 			
 			InStock = existsElement("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span");	
+			
 			if(InStock==true)
 			{
 				System.out.println("inside if instock");
@@ -105,7 +107,10 @@ public class ImperialTexSuite {
 				//CHECKOUT
 				//*[@id="sm-cartpro"]/div[2]/div/div[2]/div[2]/a
 				WebDriverWait waitForCheckOut= new WebDriverWait(driver, 50);
-				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"))).click();
+				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a")));
+				checkOut=driver.findElement(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"));
+				Actions actions2 = new Actions(driver);
+				actions2.moveToElement(checkOut).click().perform();
 				System.out.println("CheckOut is clicked");
 			}
 
@@ -124,9 +129,8 @@ public class ImperialTexSuite {
 			WebDriverWait waitForRandomProduct= new WebDriverWait(driver, 50);
 			waitForRandomProduct.until(ExpectedConditions.visibilityOf(randomProduct));
 
-			System.out.println("Random product is getText "+randomProduct.getText());
-			System.out.println("Random product getAttribute is "+randomProduct.getAttribute("title"));
-			//randomProduct.click();
+			//System.out.println("Random product is getText "+randomProduct.getText());
+			//System.out.println("Random product getAttribute is "+randomProduct.getAttribute("title"));
 			Actions actions = new Actions(driver);
 
 			actions.moveToElement(randomProduct).click().perform();
@@ -137,14 +141,17 @@ public class ImperialTexSuite {
 			if(InStock==true)
 			{
 				System.out.println("inside if instock");
-				//addCart.click();
 				driver.findElement(By.xpath("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span")).click();
 				System.out.println("Add to Cart is clicked");
 
 				//CHECKOUT
 				//*[@id="sm-cartpro"]/div[2]/div/div[2]/div[2]/a
+				//*[@id="sm-cartpro"]/div[2]/div/div[2]/div[2]/a
 				WebDriverWait waitForCheckOut= new WebDriverWait(driver, 100);
-				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"))).click();
+				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a")));
+				checkOut=driver.findElement(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"));
+				Actions actions2 = new Actions(driver);
+				actions2.moveToElement(checkOut).click().perform();
 				System.out.println("CheckOut is clicked");
 			}
 		}
