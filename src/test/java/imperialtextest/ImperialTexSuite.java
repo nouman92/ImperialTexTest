@@ -4,11 +4,13 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,7 +26,15 @@ import org.testng.annotations.Test;
 
 public class ImperialTexSuite {
 	WebDriver driver;
-	boolean outOfStock = false;
+	boolean InStock = true;
+	private boolean existsElement(String id) {
+	    try {
+	        driver.findElement(By.xpath(id));
+	    } catch (NoSuchElementException e) {
+	        return false;
+	    }
+	    return true;
+	}
 	@BeforeTest
 	public void beforeTest() throws MalformedURLException {	
 
@@ -51,7 +61,7 @@ public class ImperialTexSuite {
 	public void ImperialTexTest() {
 		Logger logger = Logger.getLogger("");
 		logger.setLevel(Level.OFF);
-		WebElement addCart;
+		//WebElement addCart;
 
 		//OPEN WEBSITE
 		driver.get("http://www.imperialtex.pk/");
@@ -84,15 +94,12 @@ public class ImperialTexSuite {
 
 			System.out.println("Random product is clicked");
 			
-			//Boolean a=true;
-			//ADDCART
-			//*[@id="product_addtocart_form"]/div[2]/div[6]/div[3]/button/span/span
-			addCart=driver.findElement(By.xpath("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span"));
-			WebDriverWait waitForAddCart= new WebDriverWait(driver, 50);
-			if(waitForAddCart.until(ExpectedConditions.visibilityOf(addCart)).equals(true))
+			InStock = existsElement("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span");	
+			if(InStock==true)
 			{
 				System.out.println("inside if instock");
-				addCart.click();
+				//addCart.click();
+				driver.findElement(By.xpath("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span")).click();
 				System.out.println("Add to Cart is clicked");
 
 				//CHECKOUT
@@ -100,25 +107,6 @@ public class ImperialTexSuite {
 				WebDriverWait waitForCheckOut= new WebDriverWait(driver, 50);
 				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"))).click();
 				System.out.println("CheckOut is clicked");
-			}
-			//*[@id="product_addtocart_form"]/div[2]/div[3]/p
-			
-//			WebElement outOfStock2=driver.findElement(By.cssSelector("p.availability"));		
-//			//*[@id="product_addtocart_form"]/div[2]/div[3]/p
-//			System.out.println("outOfStock2 is "+outOfStock2);
-//			System.out.println("outOfStock2 outOfStock2.getText() is "+outOfStock2.getText());
-//			System.out.println("outOfStock2 outOfStock2.getAttribute() is "+outOfStock2.getAttribute("class"));
-//			System.out.println("outOfStock2 outOfStock2.getTagName() is "+outOfStock2.getTagName());
-			
-			//Availability: In stock
-//			if(outOfStock2.getAttribute("class") == "availability in-stock")
-//			{
-		
-			//}
-			else
-			{
-				
-				outOfStock=true;
 			}
 
 		}
@@ -145,15 +133,12 @@ public class ImperialTexSuite {
 
 			System.out.println("Random product is clicked");
 
-			//ADDCART
-			//*[@id="product_addtocart_form"]/div[2]/div[6]/div[3]/button/span/span
-			addCart=driver.findElement(By.xpath("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span"));
-			//Boolean a=true;
-			WebDriverWait waitForAddCart= new WebDriverWait(driver, 50);
-			if(waitForAddCart.until(ExpectedConditions.visibilityOf(addCart)).equals(true))
+			InStock=existsElement("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span");
+			if(InStock==true)
 			{
 				System.out.println("inside if instock");
-				addCart.click();
+				//addCart.click();
+				driver.findElement(By.xpath("//*[@id='product_addtocart_form']/div[2]/div[6]/div[3]/button/span/span")).click();
 				System.out.println("Add to Cart is clicked");
 
 				//CHECKOUT
@@ -162,32 +147,8 @@ public class ImperialTexSuite {
 				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"))).click();
 				System.out.println("CheckOut is clicked");
 			}
-			
-//			WebElement outOfStock2=driver.findElement(By.cssSelector(".availability"));
-//			System.out.println("outOfStock2 is "+outOfStock2);
-//			System.out.println("outOfStock2 is "+outOfStock2);
-//			System.out.println("outOfStock2 outOfStock2.getText() is "+outOfStock2.getText());
-//			System.out.println("outOfStock2 outOfStock2.getAttribute() is "+outOfStock2.getAttribute("class"));
-//			System.out.println("outOfStock2 outOfStock2.getTagName() is "+outOfStock2.getTagName());
-			
-//			if(outOfStock2.getAttribute("class")=="availability in-stock")
-//			{
-//				System.out.println("inside if in-stock");
-//				addCart.click();
-//				System.out.println("Add to Cart is clicked");
-//
-//				//CHECKOUT
-//				//*[@id="sm-cartpro"]/div[2]/div/div[2]/div[2]/a
-//				WebDriverWait waitForCheckOut= new WebDriverWait(driver, 100);
-//				waitForCheckOut.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='sm-cartpro']/div[2]/div/div[2]/div[2]/a"))).click();
-//				System.out.println("Checkout is clicked");
-//			}
-			else
-			{
-				outOfStock=true;
-			}
 		}
-		if(outOfStock==false)
+		if(InStock==true)
 		{
 			//FILL IN THE BILLING INFORMATION
 			driver.findElement(By.xpath("//*[@id='billing:firstname']")).sendKeys("test");
